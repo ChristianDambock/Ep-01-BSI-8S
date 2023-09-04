@@ -6,25 +6,22 @@ O objetivo é fazer um scraper que navega no site e coleta as informações, tra
 
 O que devemos buscar de cada Pokémon obrigatoriamente:
 
-- Número v
-- URL da páginav
-- Nome v
+- Número
+- URL da página
+- Nome
 - Próximas evoluções do Pokémon se houver (PokéNum, nome e URL)
-- Tamanho v
-- Peso v
-- Tipos (água, veneno, ...) v
+- Tamanho
+- Peso
+- Tipos (água, veneno, ...)
 - Habilidades (link para outra página)
-    - URL da página v
-    - Nome v
+    - URL da página
+    - Nome
     - Descrição do efeitov
 
 - Tratamento de dados
     - Remover dados nulos ou inválidos
     - Transformação de dados
-'''
 
-'''
-Professor , para passar o tempo aproveitamos para adicionar , as habilidades, tanto normais quanto hiden, especie e também aonde se pode encontar o pokemon
 '''
 import scrapy
 class PokeSpider(scrapy.Spider):
@@ -33,10 +30,10 @@ class PokeSpider(scrapy.Spider):
 
     def parse(self, response):
         linhas = response.css('table#pokedex > tbody > tr')
-        # for linha in linhas:
-        linha = linhas[251]
-        link = linha.css("td:nth-child(2) > a::attr(href)")
-        yield response.follow(link.get(), self.parse_pokemon)
+        for linha in linhas:
+        # linha = linhas[251]
+          link = linha.css("td:nth-child(2) > a::attr(href)")
+          yield response.follow(link.get(), self.parse_pokemon)
 
     def parse_pokemon(self, response):
         link = response.url
